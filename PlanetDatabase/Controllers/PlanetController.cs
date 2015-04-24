@@ -14,105 +14,22 @@ namespace PlanetDatabase.Controllers
 {
     public class PlanetController : ApiController
     {
-        private PlanetDatabaseContext db = new PlanetDatabaseContext();
+        private IRepository _repository;
 
-        // GET: api/Planet
-        public IQueryable<Planet> GetPlanets()
+        public PlanetController(IRepository repository)
         {
-            return db.Planets;
+            _repository = repository;
         }
 
-        // GET: api/Planet/5
-        [ResponseType(typeof(Planet))]
-        public IHttpActionResult GetPlanet(int id)
+        public IQueryable<Planet> Get()
         {
-            Planet planet = db.Planets.Find(id);
-            if (planet == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(planet);
+            return _repository.GetAllPlanets();
         }
 
-        // PUT: api/Planet/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPlanet(int id, Planet planet)
+        public Planet Get(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != planet.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(planet).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlanetExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return _repository.GetPlanet(id);
         }
 
-        // POST: api/Planet
-        [ResponseType(typeof(Planet))]
-        public IHttpActionResult PostPlanet(Planet planet)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Planets.Add(planet);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = planet.Id }, planet);
-        }
-
-        // DELETE: api/Planet/5
-        [ResponseType(typeof(Planet))]
-        public IHttpActionResult DeletePlanet(int id)
-        {
-            Planet planet = db.Planets.Find(id);
-            if (planet == null)
-            {
-                return NotFound();
-            }
-
-            db.Planets.Remove(planet);
-            db.SaveChanges();
-
-            return Ok(planet);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool PlanetExists(int id)
-        {
-            return db.Planets.Count(e => e.Id == id) > 0;
-        }
     }
 }
