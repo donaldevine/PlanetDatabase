@@ -190,9 +190,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\IRepository.cs" />
     <Compile Include="Models\Planet.cs" />
     <Compile Include="Models\PlanetDatabaseContext.cs" />
     <Compile Include="Models\PlanetDatabaseContextInitializer.cs" />
+    <Compile Include="Models\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
