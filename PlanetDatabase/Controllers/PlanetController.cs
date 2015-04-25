@@ -14,18 +14,20 @@ namespace PlanetDatabase.Controllers
 {
     public class PlanetController : ApiController
     {
-        private IRepository _repository;
+        private readonly IRepository _repository;
 
         public PlanetController(IRepository repository)
         {
             _repository = repository;
         }
 
+        [HttpGet]
         public IQueryable<Planet> Get()
         {
             return _repository.GetAllPlanets();
         }
 
+        [HttpGet]
         public Planet Get(int id)
         {
             return _repository.GetPlanet(id);

@@ -1,4 +1,6 @@
+using System.Web.Http;
 using PlanetDatabase.Models;
+using WebApiContrib.IoC.Ninject;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(PlanetDatabase.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(PlanetDatabase.App_Start.NinjectWebCommon), "Stop")]
@@ -46,6 +48,9 @@ namespace PlanetDatabase.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+
+                //Plug Ninject into WebAPI
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectResolver(kernel);
 
                 RegisterServices(kernel);
                 return kernel;
