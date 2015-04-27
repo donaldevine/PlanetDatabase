@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -16,6 +17,9 @@ namespace PlanetDatabase
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            // Enable CORS
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*")); 
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

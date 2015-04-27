@@ -1,0 +1,17 @@
+﻿<div ng-controller="PlanetListCtrl as vm">
+
+    <div ng-hide="vm.planets.length">
+        <h3>Please wait, getting planets....</h3>
+    </div> 
+
+    <ul class="list-group" ng-show="vm.planets.length">
+        <li class="list-group-item" ng-repeat="planet in vm.planets">
+            <div ng-click="showDistance = !showDistance">
+                <h4>{{ planet.name }}</h4>
+            </div>
+            <div ng-show="showDistance">
+                <p>{{ planet.distanceFromSunInKm | number }} km from Sun</p>
+            </div>
+        </li>
+    </ul>
+</div>

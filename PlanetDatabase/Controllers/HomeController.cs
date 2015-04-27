@@ -8,11 +8,11 @@ namespace PlanetDatabase.Controllers
 {
     public class HomeController : Controller
     {
+        // GET: Home
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
-            return View();
+            //Needed for AzureWebSite - for MVC azure ignores index.html
+            return Redirect("/index.html");
         }
     }
 }
